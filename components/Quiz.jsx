@@ -87,37 +87,44 @@ const Quiz = () => {
     gentle: {
       name: "吉伊卡哇",
       description: "你就像吉伊卡哇一樣，性格柔軟又愛哭，但內心充滿善良，總是能成為溫暖朋友們的小太陽。雖然不善言詞，但你的溫柔能觸動每個人的心。",
-      color: "text-blue-500"
+      color: "text-blue-500",
+      bgImage: "/images/gentle.jpg"
     },
     cheerful: {
       name: "小八貓",
       description: "你和小八貓一樣大方又開朗，善於溝通理解他人。你總是能用你開朗的性格照亮周圍的人，是個值得信賴的好朋友。",
-      color: "text-gray-600"
+      color: "text-gray-600",
+      bgImage: "/images/cheerful.jpg"
     },
     energetic: {
       name: "兔兔",
       description: "你就像兔兔一樣充滿活力，喜歡大聲表達自己的想法。你是朋友們的活力擔當，總能為周圍帶來歡樂的氣氛。",
-      color: "text-purple-500"
+      color: "text-purple-500",
+      bgImage: "/images/energetic.jpg"
     },
     cute: {
       name: "小桃鼠",
       description: "你和小桃鼠一樣擅長展現可愛的一面，知道如何讓自己受歡迎。你的可愛不僅能融化他人的心，還能巧妙地獲得幫助。",
-      color: "text-pink-500"
+      color: "text-pink-500",
+      bgImage: "/images/cute.jpg"
     },
     brave: {
       name: "海獺勇者",
       description: "你像海獺勇者一樣勇敢強壯，面對困難時總是勇往直前。你的勇氣和實力讓周圍的人都非常信賴和崇拜。",
-      color: "text-yellow-600"
+      color: "text-yellow-600",
+      bgImage: "/images/brave.jpg"
     },
     gourmet: {
       name: "栗子饅頭",
       description: "你和栗子饅頭一樣，是個真正的美食家。雖然外表可愛，但內心住著一個熱愛生活、享受美食的靈魂。",
-      color: "text-brown-500"
+      color: "text-brown-500",
+      bgImage: "/images/gourmet.jpg"
     },
     loyal: {
       name: "風獅爺",
       description: "你像風獅爺一樣忠誠可靠，對重要的人充滿敬意。你的認真態度和忠誠品格讓人感到溫暖可靠。",
-      color: "text-red-500"
+      color: "text-red-500",
+      bgImage: "/images/loyal.jpg"
     }
   };
 
@@ -164,88 +171,101 @@ const Quiz = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4">
-      <div className="max-w-2xl mx-auto">
-        <Card className="bg-white shadow-xl">
-          <CardContent className="p-6">
-            <h1 className="text-3xl font-bold text-center mb-8">
-              吉伊卡哇角色心理測驗
-            </h1>
-            
-            {showNameInput ? (
-              <form onSubmit={handleNameSubmit} className="space-y-4">
-                <div className="text-center">
-                  <label htmlFor="name" className="block text-lg mb-2">
-                    請輸入你的名字
-                  </label>
-                  <Input
-                    id="name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="max-w-xs mx-auto"
-                    required
-                  />
-                </div>
-                <div className="text-center">
-                  <Button type="submit">
-                    開始測驗
-                  </Button>
-                </div>
-              </form>
-            ) : !showResult ? (
-              <div className="space-y-6">
-                <div className="text-xl font-medium mb-4">
-                  問題 {currentQuestion + 1} / {questions.length}
-                </div>
-                <div className="text-lg mb-6">
-                  {questions[currentQuestion].question}
-                </div>
-                <div className="space-y-4">
-                  {questions[currentQuestion].answers.map((answer, index) => (
-                    <Button
-                      key={index}
-                      className="w-full text-left p-4 hover:bg-gray-100"
-                      onClick={() => handleAnswer(answer.trait)}
-                    >
-                      {answer.text}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="text-center space-y-6">
-                <h2 className="text-2xl font-bold mb-4">測驗結果</h2>
-                <div className="text-xl mb-4">
+    <div className="min-h-screen bg-gray-100">
+      <div className="max-w-md mx-auto min-h-screen">
+        {showResult ? (
+          <div 
+            className="min-h-screen relative bg-cover bg-center"
+            style={{ 
+              backgroundImage: `url(${getResult().bgImage})`,
+              height: '100vh'
+            }}
+          >
+            <div className="absolute inset-0 bg-black bg-opacity-50">
+              <div className="p-6 text-white">
+                <h2 className="text-3xl font-bold mb-4 text-center">測驗結果</h2>
+                <div className="text-xl mb-4 text-center">
                   親愛的 {name}，你最接近的角色是：
-                  <span className={`font-bold ${getResult().color}`}>
+                  <div className={`text-2xl font-bold mt-2 ${getResult().color}`}>
                     {getResult().name}
-                  </span>
+                  </div>
                 </div>
-                <div className="bg-gray-50 p-6 rounded-lg mb-6">
-                  <p className="text-lg">{getResult().description}</p>
+                <div className="bg-black bg-opacity-50 p-6 rounded-lg mb-6">
+                  <p className="text-lg leading-relaxed">
+                    {getResult().description}
+                  </p>
                 </div>
-                <div className="space-x-4">
+                <div className="flex justify-center space-x-4">
                   <Button 
                     onClick={resetQuiz}
-                    className="bg-blue-500 hover:bg-blue-600 text-white"
+                    className="bg-white text-black hover:bg-gray-200"
                   >
                     重新測驗
                   </Button>
                   <Button
-                    className="bg-green-500 hover:bg-green-600 text-white"
+                    className="bg-blue-500 hover:bg-blue-600"
                     onClick={() => {
-                      // 這裡可以加入儲存圖片的邏輯
-                      // 需要實際的背景圖片資源
+                      // 在這裡實現截圖功能
                     }}
                   >
-                    儲存結果
+                    分享結果
                   </Button>
                 </div>
               </div>
-            )}
-          </CardContent>
-        </Card>
+            </div>
+          </div>
+        ) : (
+          <Card className="min-h-screen">
+            <CardContent className="p-6">
+              <h1 className="text-2xl md:text-3xl font-bold text-center mb-8">
+                吉伊卡哇角色心理測驗
+              </h1>
+              
+              {showNameInput ? (
+                <form onSubmit={handleNameSubmit} className="space-y-4">
+                  <div className="text-center">
+                    <label htmlFor="name" className="block text-lg mb-2">
+                      請輸入你的名字
+                    </label>
+                    <Input
+                      id="name"
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="max-w-xs mx-auto"
+                      required
+                    />
+                  </div>
+                  <div className="text-center">
+                    <Button type="submit">
+                      開始測驗
+                    </Button>
+                  </div>
+                </form>
+              ) : (
+                <div className="space-y-6">
+                  <div className="text-xl font-medium mb-4">
+                    問題 {currentQuestion + 1} / {questions.length}
+                  </div>
+                  <div className="text-lg mb-6">
+                    {questions[currentQuestion].question}
+                  </div>
+                  <div className="space-y-4">
+                    {questions[currentQuestion].answers.map((answer, index) => (
+                      <Button
+                        key={index}
+                        className="w-full text-left p-4 hover:bg-gray-100"
+                        onClick={() => handleAnswer(answer.trait)}
+                      >
+                        {answer.text}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
